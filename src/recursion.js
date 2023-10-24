@@ -406,7 +406,7 @@ let letterTally = function(str, obj={}) {
 
 };
 
-console.log(letterTally('potato')); // {p:1, o:2, t:2, a:1}
+// console.log(letterTally('potato')); // {p:1, o:2, t:2, a:1}
 
 
 // 32. Eliminate consecutive duplicates in a list. If the list contains repeated
@@ -431,27 +431,73 @@ let compress = function(list) {
 
 
 };
-debugger
-console.log(compress([1,2,2,3,4,4,5,5,5])) // [1,2,3,4,5]
-console.log(compress([1,2,2,3,4,4,2,5,5,5,4,4])) // [1,2,3,4,2,5,4]
+// console.log(compress([1,2,2,3,4,4,5,5,5])) // [1,2,3,4,5]
+// console.log(compress([1,2,2,3,4,4,2,5,5,5,4,4])) // [1,2,3,4,2,5,4]
 
 // 33. Augment every element in a list with a new value where each element is an array
 // itself.
 // augmentElements([[],[3],[7]], 5); // [[5],[3,5],[7,5]]
 let augmentElements = function(array, aug) {
+
+    if (array.length<1){
+        return array
+    }
+
+    else{
+        return [[...array[0],aug], ...augmentElements(array.slice(1),aug)]
+    }
 };
+
+// console.log(augmentElements([[],[3],[7]], 5)); // [[5],[3,5],[7,5]]
+
 
 // 34. Reduce a series of zeroes to a single 0.
 // minimizeZeroes([2,0,0,0,1,4]) // [2,0,1,4]
 // minimizeZeroes([2,0,0,0,1,0,0,4]) // [2,0,1,0,4]
 let minimizeZeroes = function(array) {
+    if(array.length<1){
+        return array
+    }
+
+    else{
+        if(array[0]===0 && array [1]===0){
+            return minimizeZeroes(array.slice(1))
+        }
+
+        else{
+            return [array[0], ...minimizeZeroes(array.slice(1))]
+        }
+    }
+
 };
+
+console.log(minimizeZeroes([2,0,0,0,1,4])) // [2,0,1,4]
+console.log(minimizeZeroes([2,0,0,0,1,0,0,4])) // [2,0,1,0,4]
 
 // 35. Alternate the numbers in an array between positive and negative regardless of
 // their original sign. The first number in the index always needs to be positive.
 // alternateSign([2,7,8,3,1,4]) // [2,-7,8,-3,1,-4]
 // alternateSign([-2,-7,8,3,-1,4]) // [2,-7,8,-3,1,-4]
 let alternateSign = function(array) {
+    if(array.length<1){
+        return array
+    }
+
+    else{
+        if(array[0]>0){
+            if(array[0]>0){
+            return [-1*array[0], ...minimizeZeroes(array.slice(1))]
+            }
+            else{
+                return [array[0], ...minimizeZeroes(array.slice(1))]
+
+            }
+        }
+
+        else{
+            return [array[0], ...minimizeZeroes(array.slice(1))]
+        }
+    }
 };
 
 // 36. Given a string, return a string with digits converted to their word equivalent.
