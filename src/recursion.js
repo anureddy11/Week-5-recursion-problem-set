@@ -86,13 +86,27 @@ let sumBelow = function(n) {
 let range = function(x, y) {
 
 
-    if (y-x<2){
-        return []
+    if(y>x){
+        if (y-x<2){
+            return []
+        }
+
+        else{
+            return [x+1, ...range(x+1,y)]
+        }
+    }else{
+        if (x-y<2){
+            return []
+        }
+
+        else{
+            return [x-1, ...range(x-1,y)]
+        }
+
+
     }
 
-    else{
-        return [x+1, ...range(x+1,y)]
-    }
+
 
 };
 
@@ -278,14 +292,40 @@ let countOccurrence = function(array, value) {
 // 21. Write a recursive version of map.
 // rMap([1,2,3], timesTwo); // [2,4,6]
 let rMap = function(array, callback) {
+
+    if(array.length<1){
+        return []
+    }
+    else{
+
+        return [callback(array[0])*2, ...rMap(array.slice(1),callback)]
+    }
 };
 
 // 22. Write a function that counts the number of times a key occurs in an object.
 // let obj = {'e':{'x':'y'},'t':{'r':{'e':'r'},'p':{'y':'r'}},'y':'e'};
 // countKeysInObj(obj, 'r') // 1
 // countKeysInObj(obj, 'e') // 2
-let countKeysInObj = function(obj, key) {
-};
+
+
+let countKeysInObj = function(obj, key,count=0) {
+    for(const prop in obj){
+            if(prop===key){
+                count++
+            }
+            if(typeof obj[prop]==="object"){
+                count =countKeysInObj(obj[prop],key,count)
+            }
+
+    }
+    return count
+}
+
+
+let obj = {'e':{'x':'y'},'t':{'r':{'e':'r'},'p':{'y':'r'}},'y':'e'};
+debugger
+console.log(countKeysInObj(obj, 'r')) // 1
+console.log(countKeysInObj(obj, 'e')) // 2
 
 // 23. Write a function that counts the number of times a value occurs in an object.
 // let obj = {'e':{'x':'y'},'t':{'r':{'e':'r'},'p':{'y':'r'}},'y':'e'};
@@ -297,6 +337,9 @@ let countValuesInObj = function(obj, value) {
 // 24. Find all keys in an object (and nested objects) by a provided name and rename
 // them to a provided new name while preserving the value stored at that key.
 let replaceKeysInObj = function(obj, oldKey, newKey) {
+
+
+
 };
 
 // 25. Get the first n Fibonacci numbers. In the Fibonacci sequence, each subsequent
@@ -304,8 +347,19 @@ let replaceKeysInObj = function(obj, oldKey, newKey) {
 // Example: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34.....
 // fibonacci(5); // [0,1,1,2,3,5]
 // Note: The 0 is not counted.
-let fibonacci = function(n) {
-};
+// let fibonacci = function(n) {
+//     if (n <= 0) {
+//       return 0; // Base case: Fibonacci(0) is 0
+//     } else if (n === 1) {
+//       return 1; // Base case: Fibonacci(1) is 1
+//     } else {
+//       return [fibonacci(n - 1)+fibonacci(n - 2)]; // Recursive case
+//     }
+//   };
+
+
+// console.log(fibonacci(5)); // [0,1,1,2,3,5]
+
 
 // 26. Return the Fibonacci number located at index n of the Fibonacci sequence.
 // [0,1,1,2,3,5,8,13,21]
@@ -318,13 +372,38 @@ let nthFibo = function(n) {
 // 27. Given an array of words, return a new array containing each word capitalized.
 // let words = ['i', 'am', 'learning', 'recursion'];
 // capitalizedWords(words); // ['I', 'AM', 'LEARNING', 'RECURSION']
+
 let capitalizeWords = function(array) {
+    if (array.length<1){
+         return []
+    }
+    else{
+        return [ array[0].toUpperCase(), ...capitalizeWords(array.slice(1))]
+    }
+
 };
+
+// let words = ['i', 'am', 'learning', 'recursion'];
+// console.log(capitalizeWords(words)); // ['I', 'AM', 'LEARNING', 'RECURSION']
 
 // 28. Given an array of strings, capitalize the first letter of each index.
 // capitalizeFirst(['car','poop','banana']); // ['Car','Poop','Banana']
 let capitalizeFirst = function(array) {
+    if (array.length<1){
+        return []
+   }
+   else{
+       return [ firstCap(array[0]), ...capitalizeFirst(array.slice(1))]
+   }
 };
+
+let firstCap = (str)=>{
+    let arr = str.split("")
+    arr[0]=arr[0].toUpperCase()
+    return arr.join("")
+}
+
+console.log(capitalizeFirst(['car','poop','banana'])); // ['Car','Poop','Banana']
 
 // 29. Return the sum of all even numbers in an object containing nested objects.
 // let obj1 = {
@@ -471,33 +550,15 @@ let minimizeZeroes = function(array) {
 
 };
 
-console.log(minimizeZeroes([2,0,0,0,1,4])) // [2,0,1,4]
-console.log(minimizeZeroes([2,0,0,0,1,0,0,4])) // [2,0,1,0,4]
+// console.log(minimizeZeroes([2,0,0,0,1,4])) // [2,0,1,4]
+// console.log(minimizeZeroes([2,0,0,0,1,0,0,4])) // [2,0,1,0,4]
 
 // 35. Alternate the numbers in an array between positive and negative regardless of
 // their original sign. The first number in the index always needs to be positive.
 // alternateSign([2,7,8,3,1,4]) // [2,-7,8,-3,1,-4]
 // alternateSign([-2,-7,8,3,-1,4]) // [2,-7,8,-3,1,-4]
 let alternateSign = function(array) {
-    if(array.length<1){
-        return array
-    }
 
-    else{
-        if(array[0]>0){
-            if(array[0]>0){
-            return [-1*array[0], ...minimizeZeroes(array.slice(1))]
-            }
-            else{
-                return [array[0], ...minimizeZeroes(array.slice(1))]
-
-            }
-        }
-
-        else{
-            return [array[0], ...minimizeZeroes(array.slice(1))]
-        }
-    }
 };
 
 // 36. Given a string, return a string with digits converted to their word equivalent.
