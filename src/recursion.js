@@ -323,7 +323,7 @@ let countKeysInObj = function(obj, key,count=0) {
 
 
 let obj = {'e':{'x':'y'},'t':{'r':{'e':'r'},'p':{'y':'r'}},'y':'e'};
-debugger
+
 // console.log(countKeysInObj(obj, 'r')) // 1
 // console.log(countKeysInObj(obj, 'e')) // 2
 
@@ -347,9 +347,9 @@ let countValuesInObj = function(obj, value, count =0) {
 
 };
 
-debugger
-console.log(countValuesInObj(obj, 'r')) // 2
-console.log(countValuesInObj(obj, 'e')) // 1
+
+// console.log(countValuesInObj(obj, 'r')) // 2
+// console.log(countValuesInObj(obj, 'e')) // 1
 
 // 24. Find all keys in an object (and nested objects) by a provided name and rename
 // them to a provided new name while preserving the value stored at that key.
@@ -574,9 +574,40 @@ let minimizeZeroes = function(array) {
 // their original sign. The first number in the index always needs to be positive.
 // alternateSign([2,7,8,3,1,4]) // [2,-7,8,-3,1,-4]
 // alternateSign([-2,-7,8,3,-1,4]) // [2,-7,8,-3,1,-4]
+let count=0
 let alternateSign = function(array) {
+    if(array.length<1){
+        return []
+    }
+
+    if(count%2===0){
+        if(array[0]>=0){
+            count++
+            return [array[0],...alternateSign(array.slice(1))]
+        }else{
+            count++
+            return [-1*array[0],...alternateSign(array.slice(1))]
+
+        }
+    }
+
+    else{
+
+        if(array[0]<0){
+            count++
+            return [array[0],...alternateSign(array.slice(1))]
+        }else{
+            count++
+            return [-1*array[0],...alternateSign(array.slice(1))]
+        }
+
+    }
 
 };
+
+debugger
+console.log(alternateSign([2,7,8,3,1,4])) // [2,-7,8,-3,1,-4]
+console.log(alternateSign([-2,-7,8,3,-1,4])) // [2,-7,8,-3,1,-4]
 
 // 36. Given a string, return a string with digits converted to their word equivalent.
 // Assume all numbers are single digits (less than 10).
