@@ -324,15 +324,32 @@ let countKeysInObj = function(obj, key,count=0) {
 
 let obj = {'e':{'x':'y'},'t':{'r':{'e':'r'},'p':{'y':'r'}},'y':'e'};
 debugger
-console.log(countKeysInObj(obj, 'r')) // 1
-console.log(countKeysInObj(obj, 'e')) // 2
+// console.log(countKeysInObj(obj, 'r')) // 1
+// console.log(countKeysInObj(obj, 'e')) // 2
 
 // 23. Write a function that counts the number of times a value occurs in an object.
 // let obj = {'e':{'x':'y'},'t':{'r':{'e':'r'},'p':{'y':'r'}},'y':'e'};
 // countValuesInObj(obj, 'r') // 2
 // countValuesInObj(obj, 'e') // 1
-let countValuesInObj = function(obj, value) {
+let countValuesInObj = function(obj, value, count =0) {
+
+    for(const key in obj){
+        if(obj[key] === value){
+            count++
+        }
+        if(typeof obj[key] === "object"){
+            count=countValuesInObj(obj[key],value,count)
+        }
+    }
+    return count
+
+
+
 };
+
+debugger
+console.log(countValuesInObj(obj, 'r')) // 2
+console.log(countValuesInObj(obj, 'e')) // 1
 
 // 24. Find all keys in an object (and nested objects) by a provided name and rename
 // them to a provided new name while preserving the value stored at that key.
